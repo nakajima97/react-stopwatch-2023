@@ -21,6 +21,7 @@ const App = (): JSX.Element => {
         {isRunningStopwatch ? (
           <Button
             variant="contained"
+            color="error"
             onClick={() => {
               handlePauseStopwatch();
             }}
