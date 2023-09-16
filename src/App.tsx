@@ -13,6 +13,10 @@ const App = (): JSX.Element => {
     setIsRunningStopwatch(false);
   };
 
+  const handleClearTimer = () => {
+    setTime(0);
+  };
+
   useEffect(() => {
     let interval: NodeJS.Timer;
 
@@ -33,26 +37,39 @@ const App = (): JSX.Element => {
         <Box>
           <Typography>{time}</Typography>
         </Box>
-        {isRunningStopwatch ? (
-          <Button
-            variant="contained"
-            color="error"
-            onClick={() => {
-              handlePauseStopwatch();
-            }}
-          >
-            Stop
-          </Button>
-        ) : (
-          <Button
-            variant="contained"
-            onClick={() => {
-              handleStartStopwatch();
-            }}
-          >
-            Start
-          </Button>
-        )}
+        <Box sx={{ display: 'flex', gap: '5px' }}>
+          {isRunningStopwatch ? (
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => {
+                handlePauseStopwatch();
+              }}
+            >
+              Stop
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              onClick={() => {
+                handleStartStopwatch();
+              }}
+            >
+              Start
+            </Button>
+          )}
+          {time !== 0 && !isRunningStopwatch && (
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                handleClearTimer();
+              }}
+            >
+              Clear
+            </Button>
+          )}
+        </Box>
       </Container>
     </>
   );
