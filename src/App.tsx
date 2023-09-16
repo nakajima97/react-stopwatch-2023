@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Typography, Button, Container, Box } from '@mui/material';
 
 const App = (): JSX.Element => {
   const [isRunningStopwatch, setIsRunningStopwatch] = useState(false);
+  const [time, setTime] = useState(0);
 
   const handleStartStopwatch = () => {
     setIsRunningStopwatch(true);
@@ -12,11 +13,25 @@ const App = (): JSX.Element => {
     setIsRunningStopwatch(false);
   };
 
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+
+    if (isRunningStopwatch) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isRunningStopwatch]);
+
   return (
     <>
       <Container>
         <Box>
-          <Typography>00:00:00</Typography>
+          <Typography>{time}</Typography>
         </Box>
         {isRunningStopwatch ? (
           <Button
