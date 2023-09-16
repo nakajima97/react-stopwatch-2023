@@ -31,11 +31,23 @@ const App = (): JSX.Element => {
     };
   }, [isRunningStopwatch]);
 
+  const formatTimer = (time: number) => {
+    const hour = Math.floor(time / 3600);
+    const minute = Math.floor((time - hour * 3600) / 60);
+    const second = time % 60;
+
+    const formattedHours = String(hour).padStart(2, '0');
+    const formattedMinute = String(minute).padStart(2, '0');
+    const formattedSecond = String(second).padStart(2, '0');
+
+    return `${formattedHours}:${formattedMinute}:${formattedSecond}`;
+  };
+
   return (
     <>
       <Container>
         <Box>
-          <Typography>{time}</Typography>
+          <Typography>{formatTimer(time)}</Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: '5px' }}>
           {isRunningStopwatch ? (
@@ -55,7 +67,7 @@ const App = (): JSX.Element => {
                 handleStartStopwatch();
               }}
             >
-              Start
+              {time === 0 ? 'Start' : 'Restart'}
             </Button>
           )}
           {time !== 0 && !isRunningStopwatch && (
